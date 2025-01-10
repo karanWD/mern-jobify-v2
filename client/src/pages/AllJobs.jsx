@@ -1,9 +1,8 @@
-import { toast } from 'react-toastify';
-import { JobsContainer, SearchContainer } from '../components';
-import customFetch from '../utils/customFetch';
+import { JobsContainer, SearchContainer } from '../components/index.js';
 import { useLoaderData } from 'react-router-dom';
 import { useContext, createContext } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import customFetch from "../utils/customFetch.js";
 
 const allJobsQuery = (params) => {
   const { search, jobStatus, jobType, sort, page } = params;

@@ -1,8 +1,8 @@
-import { FormRow, SubmitBtn } from '../components';
-import Wrapper from '../assets/wrappers/DashboardFormPage';
+import { FormRow, SubmitBtn } from '../components/index.js';
+import Wrapper from '../assets/wrappers/DashboardFormPage.js';
 import { useOutletContext, redirect } from 'react-router-dom';
 import { Form } from 'react-router-dom';
-import customFetch from '../utils/customFetch';
+import customFetch from '../utils/customFetch.js';
 import { toast } from 'react-toastify';
 
 export const action =

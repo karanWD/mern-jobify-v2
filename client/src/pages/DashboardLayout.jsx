@@ -1,11 +1,11 @@
 import { Outlet, redirect, useNavigate, useNavigation } from 'react-router-dom';
-import Wrapper from '../assets/wrappers/Dashboard';
-import { BigSidebar, Navbar, SmallSidebar, Loading } from '../components';
+import Wrapper from '../assets/wrappers/Dashboard.js';
+import { BigSidebar, Navbar, SmallSidebar, Loading } from '../components/index.js';
 import { createContext, useContext, useEffect, useState } from 'react';
-import customFetch from '../utils/customFetch';
+import customFetch from '../utils/customFetch.js';
 import { toast } from 'react-toastify';
 import { useQuery } from '@tanstack/react-query';
-import { checkDefaultTheme } from '../App';
+import { checkDefaultTheme } from '../App.jsx';
 const userQuery = {
   queryKey: ['user'],
   queryFn: async () => {

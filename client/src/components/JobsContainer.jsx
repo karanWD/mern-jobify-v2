@@ -1,7 +1,7 @@
-import Job from './Job';
-import Wrapper from '../assets/wrappers/JobsContainer';
-import { useAllJobsContext } from '../pages/AllJobs';
-import PageBtnContainer from './PageBtnContainer';
+import Job from './Job.jsx';
+import Wrapper from '../assets/wrappers/JobsContainer.js';
+import { useAllJobsContext } from '../pages/AllJobs.jsx';
+import PageBtnContainer from './PageBtnContainer.jsx';
 const JobsContainer = () => {
   const { data } = useAllJobsContext();
 

@@ -1,8 +1,8 @@
 import styled from 'styled-components';
-import Wrapper from '../assets/wrappers/LandingPage';
+import Wrapper from '../assets/wrappers/LandingPage.js';
 import main from '../assets/images/main.svg';
 import { Link } from 'react-router-dom';
-import { Logo } from '../components';
+import { Logo } from '../components/index.js';
 
 const Landing = () => {
   return (

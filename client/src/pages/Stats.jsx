@@ -1,5 +1,5 @@
-import { ChartsContainer, StatsContainer } from '../components';
-import customFetch from '../utils/customFetch';
+import { ChartsContainer, StatsContainer } from '../components/index.js';
+import customFetch from '../utils/customFetch.js';
 import { useLoaderData } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
 
