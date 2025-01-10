@@ -1,34 +1,9 @@
 import { FormRow, SubmitBtn } from '../components/index.js';
 import Wrapper from '../assets/wrappers/DashboardFormPage.js';
-import { useOutletContext, redirect } from 'react-router-dom';
 import { Form } from 'react-router-dom';
-import customFetch from '../utils/customFetch.js';
-import { toast } from 'react-toastify';
-
-export const action =
-  (queryClient) =>
-  async ({ request }) => {
-    const formData = await request.formData();
-    const file = formData.get('avatar');
-    if (file && file.size > 500000) {
-      toast.error('Image size too large');
-      return null;
-    }
-    try {
-      await customFetch.patch('/users/update-user', formData);
-      queryClient.invalidateQueries(['user']);
-      toast.success('Profile updated successfully');
-      return redirect('/dashboard');
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-      return null;
-    }
-  };
 
 const Profile = () => {
-  const { user } = useOutletContext();
 
-  const { name, lastName, email, location } = user;
 
   return (
     <Wrapper>
@@ -52,9 +27,8 @@ const Profile = () => {
             type='text'
             name='lastName'
             labelText='last name'
-            defaultValue={lastName}
           />
-          <FormRow type='email' name='email' defaultValue={email} />
+          <FormRow type='email' name='email'  />
           <FormRow type='text' name='location' defaultValue={location} />
           <SubmitBtn formBtn />
         </div>

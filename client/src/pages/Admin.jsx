@@ -1,19 +1,8 @@
 import { FaSuitcaseRolling, FaCalendarCheck } from 'react-icons/fa';
-import { useLoaderData, redirect } from 'react-router-dom';
-import customFetch from '../utils/customFetch.js';
+import { useLoaderData } from 'react-router-dom';
 import Wrapper from '../assets/wrappers/StatsContainer.js';
-import { toast } from 'react-toastify';
 import { StatItem } from '../components/index.js';
 
-export const loader = async () => {
-  try {
-    const response = await customFetch.get('/users/admin/app-stats');
-    return response.data;
-  } catch (error) {
-    toast.error('You are not authorized to view this page');
-    return redirect('/dashboard');
-  }
-};
 
 const Admin = () => {
   const { users, jobs } = useLoaderData();

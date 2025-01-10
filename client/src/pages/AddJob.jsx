@@ -1,29 +1,8 @@
 import { FormRow, FormRowSelect, SubmitBtn } from '../components/index.js';
 import Wrapper from '../assets/wrappers/DashboardFormPage.js';
-import { useOutletContext } from 'react-router-dom';
-import { JOB_STATUS, JOB_TYPE } from '../../../utils/constants.js';
-import { Form, redirect } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import customFetch from '../utils/customFetch.js';
-
-export const action =
-  (queryClient) =>
-  async ({ request }) => {
-    const formData = await request.formData();
-    const data = Object.fromEntries(formData);
-    try {
-      await customFetch.post('/jobs', data);
-      queryClient.invalidateQueries(['jobs']);
-      toast.success('Job added successfully ');
-      return redirect('all-jobs');
-    } catch (error) {
-      toast.error(error?.response?.data?.msg);
-      return error;
-    }
-  };
+import { Form } from 'react-router-dom';
 
 const AddJob = () => {
-  const { user } = useOutletContext();
 
   return (
     <Wrapper>
@@ -36,20 +15,15 @@ const AddJob = () => {
             type='text'
             labelText='job location'
             name='jobLocation'
-            defaultValue={user.location}
           />
-          <FormRowSelect
-            labelText='job status'
-            name='jobStatus'
-            defaultValue={JOB_STATUS.PENDING}
-            list={Object.values(JOB_STATUS)}
-          />
-          <FormRowSelect
-            labelText='job type'
-            name='jobType'
-            defaultValue={JOB_TYPE.FULL_TIME}
-            list={Object.values(JOB_TYPE)}
-          />
+          {/*<FormRowSelect*/}
+          {/*  labelText='job status'*/}
+          {/*  name='jobStatus'*/}
+          {/*/>*/}
+          {/*<FormRowSelect*/}
+          {/*  labelText='job type'*/}
+          {/*  name='jobType'*/}
+          {/*/>*/}
           <SubmitBtn formBtn />
         </div>
       </Form>
