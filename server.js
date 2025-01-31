@@ -1,74 +1,37 @@
-import 'express-async-errors';
-import * as dotenv from 'dotenv';
-dotenv.config();
-import express from 'express';
-const app = express();
-import morgan from 'morgan';
-import mongoose from 'mongoose';
-import cookieParser from 'cookie-parser';
-import cloudinary from 'cloudinary';
-import helmet from 'helmet';
-import mongoSanitize from 'express-mongo-sanitize';
+import express from "express"
+import "express-async-errors"
+import dotenv from "dotenv";
+import morgan from "morgan";
+import mongoose from "mongoose";
+import jobsRouter from "./routers/jobs-router.js"
+import usersRouter from "./routers/users-router.js"
 
-// routers
-import jobRouter from './routes/jobRouter.js';
-import authRouter from './routes/authRouter.js';
-import userRouter from './routes/userRouter.js';
-// public
-import { dirname } from 'path';
-import { fileURLToPath } from 'url';
-import path from 'path';
-
-// middleware
-import errorHandlerMiddleware from './middleware/errorHandlerMiddleware.js';
-import { authenticateUser } from './middleware/authMiddleware.js';
-
-cloudinary.config({
-  cloud_name: process.env.CLOUD_NAME,
-  api_key: process.env.CLOUD_API_KEY,
-  api_secret: process.env.CLOUD_API_SECRET,
-});
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
+dotenv.config()
+const app = express()
+app.use(express.json())
+if (process.env.NODE_ENV === "development") {
+  app.use(morgan("dev"))
 }
-app.use(express.static(path.resolve(__dirname, './client/dist')));
-app.use(cookieParser());
-app.use(express.json());
-app.use(helmet());
-app.use(mongoSanitize());
 
-app.get('/', (req, res) => {
-  res.send('Hello World');
-});
 
-app.get('/api/v1/test', (req, res) => {
-  res.json({ msg: 'test route' });
-});
-
-app.use('/api/v1/jobs', authenticateUser, jobRouter);
-app.use('/api/v1/users', authenticateUser, userRouter);
-app.use('/api/v1/auth', authRouter);
-
-app.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, './client/dist', 'index.html'));
-});
-
-app.use('*', (req, res) => {
-  res.status(404).json({ msg: 'not found' });
-});
-
-app.use(errorHandlerMiddleware);
-
-const port = process.env.PORT || 5100;
+app.use("/api/jobs", jobsRouter)
+app.use("/api/auth", usersRouter)
+app.use("*", (res, req) => {
+  console.log('404 ROUTE')
+  res.status(404).json({message:"unexpected route"})
+})
+app.use((err, req, res, next) => {
+  console.log(err)
+  res.status(500).json({message: "Unfortunately, we have some errors here :("})
+})
 
 try {
-  await mongoose.connect(process.env.MONGO_URL);
-  app.listen(port, () => {
-    console.log(`server running on PORT ${port}...`);
-  });
-} catch (error) {
-  console.log(error);
+  await mongoose.connect(process.env.DB_URL).then(() => console.log("DB IS CONNECTED"))
+  app.listen(process.env.PORT, () => {
+    console.log(`server is running on port:${process.env.PORT || 5100}`)
+  })
+
+} catch (e) {
+  console.log(e, "ERROR on registering db")
   process.exit(1);
 }
