@@ -3,18 +3,21 @@ import "express-async-errors"
 import dotenv from "dotenv";
 import morgan from "morgan";
 import mongoose from "mongoose";
+import cookieParser from "cookie-parser"
 import jobsRouter from "./routers/jobs-router.js"
 import usersRouter from "./routers/users-router.js"
+import {authenticateUser} from "./middlewares/authMiddleware.js";
 
 dotenv.config()
 const app = express()
 app.use(express.json())
+app.use(cookieParser())
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"))
 }
 
 
-app.use("/api/jobs", jobsRouter)
+app.use("/api/jobs", authenticateUser,jobsRouter)
 app.use("/api/auth", usersRouter)
 app.use("*", (res, req) => {
   console.log('404 ROUTE')

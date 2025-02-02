@@ -1,6 +1,7 @@
 import UsersModel from "../models/users-model.js";
-import {hashPassword} from "../middlewares/hashPassword.js";
-import {comparePassword} from "../middlewares/comparePassword.js";
+import {hashPassword} from "../utils/hashPassword.js";
+import {comparePassword} from "../utils/comparePassword.js";
+import {generateJWT} from "../utils/generateJWT.js";
 
 export const register = async (req, res) => {
   try {
@@ -37,9 +38,23 @@ export const login = async (req, res) => {
     if (!validPass){
       return res.status(403).json({message: "Invalid Credential"})
     }
-    res.status(200).json({message: "LoggedIn"})
+    const token = generateJWT({userId:user._id,role:user.role})
+    res.cookie('token',token,{
+      httpOnly:true,
+      expires:new Date(Date.now()+(1000*60*60*24)),
+      secure:process.env.NODE_ENV==='production'
+    })
+    res.status(200).json({message:"User LoggedIn"})
   } catch
     (e) {
     res.status(500).json({message: `Oops we have a server error: ${e}`})
   }
+}
+
+export const logout = async (req,res)=>{
+  res.cookie('token','logout',{
+    httpOnly:true,
+    expires:new Date(Date.now())
+  })
+  res.status(200).json({"message":"logged out successfully"})
 }
