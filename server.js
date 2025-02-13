@@ -5,7 +5,9 @@ import morgan from "morgan";
 import mongoose from "mongoose";
 import cookieParser from "cookie-parser"
 import jobsRouter from "./routers/jobs-router.js"
-import usersRouter from "./routers/users-router.js"
+import authRouter from "./routers/auth-router.js"
+import userRouter from "./routers/user-router.js"
+import dashboardRouter from "./routers/dashboard-router.js"
 import {authenticateUser} from "./middlewares/authMiddleware.js";
 
 dotenv.config()
@@ -15,10 +17,10 @@ app.use(cookieParser())
 if (process.env.NODE_ENV === "development") {
   app.use(morgan("dev"))
 }
-
-
+app.use("/api/auth", authRouter)
+app.use("/api/dashboard",authenticateUser, dashboardRouter)
 app.use("/api/jobs", authenticateUser,jobsRouter)
-app.use("/api/auth", usersRouter)
+app.use("/api/user", authenticateUser,userRouter)
 app.use("*", (res, req) => {
   console.log('404 ROUTE')
   res.status(404).json({message:"unexpected route"})

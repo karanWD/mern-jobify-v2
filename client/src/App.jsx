@@ -15,6 +15,9 @@ import {
 } from './pages';
 
 import ErrorElement from './components/ErrorElement';
+import {registerAction} from "./pages/Register.jsx";
+import {loginAction} from "./pages/Login.jsx";
+import {dashboardLoader} from "./pages/DashboardLayout.jsx";
 
 export const checkDefaultTheme = () => {
   const isDarkTheme = localStorage.getItem('darkTheme') === 'true';
@@ -37,14 +40,17 @@ const router = createBrowserRouter([
       {
         path: 'register',
         element: <Register />,
+        action:registerAction
       },
       {
         path: 'login',
         element: <Login />,
+        action:loginAction
       },
       {
         path: 'dashboard',
         element: <DashboardLayout />,
+        loader:dashboardLoader,
         children: [
           {
             index: true,

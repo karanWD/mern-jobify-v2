@@ -15,7 +15,7 @@ export const register = async (req, res) => {
     }
     const hashedPass = await hashPassword(req.body.password)
     const newUser = await UsersModel.create({...req.body, password: hashedPass})
-    res.status(201).json({user: newUser})
+    res.status(201).json({message:"user registered successfully"})
   } catch (e) {
     res.status(500).json({message: `Oops we have a server error: ${e}`})
   }
