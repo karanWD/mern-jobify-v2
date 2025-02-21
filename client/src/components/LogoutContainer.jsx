@@ -6,7 +6,6 @@ import { useDashboardContext } from '../pages/DashboardLayout.jsx';
 const LogoutContainer = () => {
   const [showLogout, setShowLogout] = useState(false);
   const { user, logoutHandler } = useDashboardContext();
-  console.log(user)
   return (
     <Wrapper>
       <button

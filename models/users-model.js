@@ -1,4 +1,4 @@
-import {Schema, model, Types} from "mongoose";
+import {Schema, model} from "mongoose";
 import {ROLES} from "../utils/constants.js";
 
 const UsersModel = new Schema({
@@ -14,7 +14,9 @@ const UsersModel = new Schema({
     type:String,
     enum:Object.values(ROLES),
     default: ROLES.USER
-  }
+  },
+  avatar:String,
+  avatarPublicId:String
 })
 
 export  default model('User',UsersModel)

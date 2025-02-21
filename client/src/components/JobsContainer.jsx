@@ -3,8 +3,8 @@ import Wrapper from '../assets/wrappers/JobsContainer.js';
 import { useAllJobsContext } from '../pages/AllJobs.jsx';
 import PageBtnContainer from './PageBtnContainer.jsx';
 const JobsContainer = () => {
-  const { data } = useAllJobsContext();
-
+  const {data} = useAllJobsContext();
+  console.log(data)
   const { jobs, totalJobs, numOfPages } = data;
   if (jobs.length === 0) {
     return (

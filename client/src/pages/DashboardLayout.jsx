@@ -10,7 +10,7 @@ export const dashboardLoader = async ()=>{
   try {
     const res = await axios.request({
       method:"get",
-      url:"api/user/current",
+      url:"/api/user/current",
     })
     return res.data
   }catch (e) {
@@ -42,7 +42,7 @@ const DashboardLayout = () => {
   const logoutHandler = async () => {
     try {
       await axios.request({
-        url:"api/auth/logout",
+        url:"/api/auth/logout",
         method:"get"
       })
       navigate("/")
@@ -54,7 +54,7 @@ const DashboardLayout = () => {
   return (
     <DashboardContext.Provider
       value={{
-        user:userData.user,
+        user:userData?.user,
         logoutHandler,
         showSidebar,
         isDarkTheme,

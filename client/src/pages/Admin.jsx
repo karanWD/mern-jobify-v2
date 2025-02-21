@@ -1,23 +1,37 @@
 import { FaSuitcaseRolling, FaCalendarCheck } from 'react-icons/fa';
-import { useLoaderData } from 'react-router-dom';
+import {redirect, useLoaderData} from 'react-router-dom';
 import Wrapper from '../assets/wrappers/StatsContainer.js';
 import { StatItem } from '../components/index.js';
+import axios from "axios";
+import {toast} from "react-toastify";
 
+export const adminLoader = async ()=>{
+  try {
+    const {data} = await axios.request({
+      method:"get",
+      url:"/api/dashboard/statistics"
+    })
+    return data
+  }catch (e) {
+    toast.error(e.response.data.message || e.message)
+    return redirect("/dashboard")
+  }
+}
 
 const Admin = () => {
-  const { users, jobs } = useLoaderData();
+  const { usersCount, jobsCount } = useLoaderData();
   return (
     <Wrapper>
       <StatItem
         title='current users'
-        count={users}
+        count={usersCount}
         color='#e9b949'
         bcg='#fcefc7'
         icon={<FaSuitcaseRolling />}
       />
       <StatItem
         title='total jobs'
-        count={jobs}
+        count={jobsCount}
         color='#647acb'
         bcg='#e0e8f9'
         icon={<FaCalendarCheck />}

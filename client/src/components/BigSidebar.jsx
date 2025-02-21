@@ -1,10 +1,11 @@
 import Wrapper from '../assets/wrappers/BigSidebar.js';
 import NavLinks from './NavLinks.jsx';
 import Logo from './Logo.jsx';
-import { useDashboardContext } from '../pages/DashboardLayout.jsx';
-const BigSidebar = () => {
-  const { showSidebar } = useDashboardContext();
+import {useDashboardContext} from '../pages/DashboardLayout.jsx';
 
+const BigSidebar = () => {
+  const dashboard = useDashboardContext();
+  const showSidebar = dashboard?.showSidebar
   return (
     <Wrapper>
       <div
@@ -14,9 +15,9 @@ const BigSidebar = () => {
       >
         <div className='content'>
           <header>
-            <Logo />
+            <Logo/>
           </header>
-          <NavLinks isBigSidebar />
+          <NavLinks isBigSidebar/>
         </div>
       </div>
     </Wrapper>
